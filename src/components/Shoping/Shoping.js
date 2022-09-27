@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addToDb } from "../../utilities/fakedb";
+import { addToDb, getstorage } from "../../utilities/fakedb";
 import Cart from "../Cart/Cart";
 import Prodact from "../prodact/Prodact";
 import './Shoping.css'
@@ -13,12 +13,37 @@ const Shoping = () => {
     }, []);
 
     // lode and display show 
-     
+    useEffect(()=> {
+      const setdstorage =getstorage();
+      let save = [];
+
+      for (const id in setdstorage) {
+        const addedProdact = prodacts.find(prodact => prodact.id === id);
+         if(addedProdact){
+           const quantity =setdstorage[id];
+           addedProdact.quantity =quantity;
+           save.push(addedProdact)
+         }
+       }
+       setcart(save)
+    }, [prodacts]) ;
 
     // click to add in cart 
     const [cart , setcart] =useState([]);
     const addtocad =(slectProdact)=>{
-        setcart([...cart ,slectProdact])
+      let newcart =[];
+      const extsts =cart.find(peodact => peodact.id === slectProdact.id);
+      if(!extsts){
+        slectProdact.quantity =1;
+        newcart = [...cart ,slectProdact];
+      }else{
+        const rest = cart.filter(prodact => prodact.id !== slectProdact.id);
+        extsts.quantity =extsts.quantity + 1;
+        newcart =[...rest, extsts]
+      }
+
+
+        setcart(newcart)
         addToDb(slectProdact.id);
     }
   return (
