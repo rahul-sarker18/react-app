@@ -1,0 +1,20 @@
+.nav{
+    display: flex;
+    background-color: rgb(27, 32, 32);
+    justify-content: space-between;
+   padding-left: 50px;
+   padding-right: 50px;
+   padding: 20px;
+   align-items: center;
+}
+.nav-write a{
+    text-decoration: none;
+    padding-left: 19px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+
+.nav-write a:hover{
+    color: orange;
+}
